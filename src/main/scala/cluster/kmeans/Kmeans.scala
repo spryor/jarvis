@@ -85,8 +85,7 @@ class Kmeans(
   }
 
   private[this] def chooseKmeansPlusPlusCentroids(k: Int) = {
-    val firstCentroid = random.shuffle(points).take(1)
-    
+
     def stepKmeansPlusPlus(centroids: IndexedSeq[Point], k: Int): IndexedSeq[Point] = {
       if(k < 1) {
         centroids
@@ -102,6 +101,6 @@ class Kmeans(
       }
     }
 
-    stepKmeansPlusPlus(firstCentroid, k)
+    stepKmeansPlusPlus(random.shuffle(points).take(1), k)
   }
 }
