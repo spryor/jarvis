@@ -1,6 +1,17 @@
 //Author: Stephen Pryor
 //Feb 24, 2013
 
+/**
+ * Note: This code is essentially a modified version of 
+ * Dr. Jason Baldridge's Kmeans implementation in nak.
+ * https://github.com/jasonbaldridge/nak
+ *
+ * I have made only slight modifications such as adding
+ * Kmeans++ as an alternative to random centroid 
+ * initialization and some minor code restructuring.
+ **/
+
+
 package jarvis.cluster
 
 import jarvis.math._
