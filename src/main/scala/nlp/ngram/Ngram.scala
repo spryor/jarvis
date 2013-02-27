@@ -5,14 +5,14 @@ package jarvis.nlp
 
 class Ngram(n:Int, 
             sentences: IndexedSeq[IndexedSeq[String]], 
-            alpha: Double = 1.0, 
+            alpha: Double = 0.5, 
             useBackoff: Boolean = true) {
   import collection.mutable.HashMap  
   
   private[this] val bookends = (1 to n-1).map(_ => "<s>").toIndexedSeq
-  private[this] val ngramCounts = ((if(useBackoff) 1 else math.max(1, n-1)) to n)
+  private[this] val ngramCounts = (1 to n)
                     .map(i => countNgrams(i, sentences))
-                    .toIndexedSeq                   
+                    .toIndexedSeq
   private[this] val totalUnigrams = ngramCounts(0).values.sum.toDouble
   
   def apply(sentence: IndexedSeq[String]) = {
@@ -39,16 +39,16 @@ class Ngram(n:Int,
     sentence.sliding(n).map(_.mkString(" ")).toIndexedSeq
   }
   
-  private[this] def probNgram(ngram: String, n:Int = n):Double = {
-    if(n == 1) {
+  private[this] def probNgram(ngram: String, n:Int = n - 1):Double = {
+    if(n <= 0) {
       (ngramCounts(0)(ngram) + alpha) / (totalUnigrams + alpha*ngramCounts(0).size.toDouble)
     } else {
       val prevGram = ngram.replaceAll("\\s+[^\\s]+$", "")
-      val prevCount = ngramCounts(n-2)(prevGram)
+      val prevCount = ngramCounts(n-1)(prevGram)
       if(prevCount < 1.0 && useBackoff) { //if prevGram does exist, backoff
         probNgram(ngram.replaceAll("^[^\\s]+\\s+", ""), n-1)
       } else {
-        val currCount = ngramCounts(n-1)(ngram)
+        val currCount = ngramCounts(n)(ngram)
         (currCount + alpha) / (prevCount + alpha*ngramCounts(n-1).size.toDouble)
       }
     }
