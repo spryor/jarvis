@@ -25,7 +25,7 @@ class Ngram(n:Int,
     .sum
   }
   
-  def computePerpexity(sentences: IndexedSeq[IndexedSeq[String]]) = {
+  def computePerplexity(sentences: IndexedSeq[IndexedSeq[String]]) = {
     var numtokens = 0
     var totalProb = 0.0
     sentences.foreach(sentence => {
