@@ -40,12 +40,12 @@ class Ngram(n:Int,
   }
   
   private[this] def probNgram(ngram: String, n:Int = n):Double = {
-    if(n == 1){
+    if(n == 1) {
       (ngramCounts(0)(ngram) + alpha) / (totalUnigrams + alpha*ngramCounts(0).size.toDouble)
     } else {
       val prevGram = ngram.replaceAll("\\s+[^\\s]+$", "")
       val prevCount = ngramCounts(n-2)(prevGram)
-      if(prevCount < 1.0 && useBackoff){ //if prevGram does exist, backoff
+      if(prevCount < 1.0 && useBackoff) { //if prevGram does exist, backoff
         probNgram(ngram.replaceAll("^[^\\s]+\\s+", ""), n-1)
       } else {
         val currCount = ngramCounts(n-1)(ngram)
