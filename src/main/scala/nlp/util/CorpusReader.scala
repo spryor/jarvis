@@ -77,7 +77,7 @@ abstract class CorpusReader extends FileParser {
 
 /* -------------------- CorpusReader - END -------------------- */
 
-//Creates an object to read read .pos files from the Penn treebank
+//Creates an object to read .pos files from the Penn treebank
 object PENNReader extends CorpusReader with PENNParser
 
 
