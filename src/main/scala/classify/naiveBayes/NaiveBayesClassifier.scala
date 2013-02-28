@@ -10,7 +10,6 @@ package jarvis.classify
  * @param featureVectors is a map of labels to document feature vectors. Each key in the map is a class label. Each feature vector is an indexed sequence of a feature to the count of that feature in a particular document
  * @param alpha is the smoothing parameter for laplace alpha smoothing. 0.0 is no smoothing.
  */
-
 class NaiveBayesClassifier[LabelType, FeatureType](
       featureVectors: Map[LabelType, IndexedSeq[IndexedSeq[(FeatureType, Int)]]],
       alpha: Double){
