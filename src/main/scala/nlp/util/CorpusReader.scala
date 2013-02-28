@@ -31,11 +31,16 @@ object SimpleTokenizer extends Tokenizer {
  * The FileParser trait is used take a file from a corpus and parse
  * the file to extract sentences as tokenized sequences of strings.
  */
-trait FileParser{
+trait FileParser {
   def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]]
 }
 
-trait IdentityParser extends FileParser{
+/**
+ * The IdentityParser simply takes the contents of a file and tokenizes them.
+ * That is, the entire file is handled as a single sentence (useful if you are
+ * interested in extracting document level features).
+ */
+trait IdentityParser extends FileParser {
   override def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]] =
     IndexedSeq(tokenize(text))
 }
