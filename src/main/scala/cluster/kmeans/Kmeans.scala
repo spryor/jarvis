@@ -16,6 +16,17 @@ package jarvis.cluster
 
 import jarvis.math._
 
+/**
+ * A class for running the Kmeans algorithm 
+ *
+ * @param points an indexed sequence of points to be clustered
+ * @param distance the DistanceFunction to use to compute distance between points
+ * @param maxChangeInDispersion the change in dispersion to tell the algorithm to terminate
+ * @param maxIter is the maximum number of iterations to run k-means for
+ * @param useRandomSeed tells the algorithm whether or not to use a random seed or a non-random number (for repeatable results)
+ * @param useRandomInitialization tell the algorithm to use Kmeans++ initialization (the default) or random initialization
+ * @param defaultRandomSeed the default seed value to use if useRandomSeed is false
+ */
 class Kmeans(
       points: IndexedSeq[Point],
       distFunc: DistanceFunction = DistanceFunction("e"),
