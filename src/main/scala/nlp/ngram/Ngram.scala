@@ -4,7 +4,7 @@
 package jarvis.nlp
 
 /**
- * A class for ngram language models.
+ * A class for creating ngram language models.
  *
  * @param n is the type of ngram you wish to create (i.e. n=2 creates a bigram, n=3 creates a trigram, etc.)
  * @param sentences is and indexed sequence of tokenized sentences to use as training data
@@ -23,16 +23,34 @@ class Ngram(n:Int,
                     .toIndexedSeq
   private[this] val totalUnigrams = ngramCounts(0).values.sum.toDouble
   
+  /**
+   * Returns the log probability of a tokenized sentence
+   *
+   * @param sentence is a tokenized sentence
+   * @return A double of the log probability of the sentence
+   */
   def apply(sentence: IndexedSeq[String]) = {
     prob(sentence)
   }
   
+  /**
+   * Returns the log probability of a tokenized sentence
+   *
+   * @param sentence is a tokenized sentence
+   * @return A double of the log probability of the sentence
+   */
   def prob(sentence: IndexedSeq[String]) = {
     extractNgrams(n, bookends ++ sentence)
     .map(ngram => math.log(probNgram(ngram)))
     .sum
   }
   
+  /**
+   * Returns the perplexity score of the model on a given dataset
+   *
+   * @param sentences is a indexed sequence of tokenized sentences
+   * @return A double of the perplexity score of the model for the given model
+   */
   def computePerplexity(sentences: IndexedSeq[IndexedSeq[String]]) = {
     var numtokens = 0
     var totalProb = 0.0
@@ -43,10 +61,24 @@ class Ngram(n:Int,
     math.pow(2, -totalProb/numtokens)  
   }
   
+  /**
+   * Returns ngrams of a tokenized sequence
+   *
+   * @param n the value for the size of ngram
+   * @param sentences is a indexed sequence of tokenized sentences
+   * @return An indexed sequence of ngrams
+   */
   private[this] def extractNgrams(n: Int, sentence: IndexedSeq[String]) = {
     sentence.sliding(n).map(_.mkString(" ")).toIndexedSeq
   }
   
+  /**
+   * Returns the probability of a given ngram
+   *
+   * @param ngram the ngram to retrieve the probability for
+   * @param n the value for the type of ngram provided, defaults to the class n but can be specified for backoff
+   * @return A double for the probability of the ngram
+   */
   private[this] def probNgram(ngram: String, n:Int = n - 1):Double = {
     if(n <= 0) {
       (ngramCounts(0)(ngram) + alpha) / (totalUnigrams + alpha*ngramCounts(0).size.toDouble)
@@ -62,6 +94,13 @@ class Ngram(n:Int,
     }
   }
   
+  /**
+   * Returns a map of ngrams mapped to their counts in the dataset
+   *
+   * @param n the value for the size of ngram
+   * @param sentences is a indexed sequence of tokenized sentences
+   * @return A map of ngrams mapped to their counts
+   */
   private[this] def countNgrams(n:Int, sentences: IndexedSeq[IndexedSeq[String]]) = {
     val counts = HashMap[String,Double]().withDefaultValue(0.0)
     sentences.foreach(sentence => {
