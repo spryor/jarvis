@@ -11,6 +11,10 @@ trait Tokenizer {
   def apply(text: String): IndexedSeq[String] 
 }
 
+/**
+ * The SimpleTokenizer object taks a string and tokenizes words only
+ * while removing puncuation except for ' which occur in words.
+ */
 object SimpleTokenizer extends Tokenizer {
   lazy val tokenPattern = """([<]?[a-zA-Z]+(['][a-zA-Z]+)?[>]?)""".r
     
@@ -23,10 +27,19 @@ object SimpleTokenizer extends Tokenizer {
 
 /* -------------------- FileParser - START -------------------- */
 
+/**
+ * The FileParser trait is used take a file from a corpus and parse
+ * the file to extract sentences as tokenized sequences of strings.
+ */
 trait FileParser{
   def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]]
 }
 
+
+/**
+ * The PENNParser is used to parse the contents of Penn Treebank 
+ * WSJ or BROWN .pos files. 
+ */
 trait PENNParser extends FileParser {
   val pattern = """([^\s]+/[^\s]+)""".r
   
@@ -52,7 +65,10 @@ trait PENNParser extends FileParser {
 /* -------------------- FileParser - END -------------------- */
 
 /* -------------------- CorpusReader - START -------------------- */
-
+/**
+ * The CorpusReader class is used to collect, read, and parse
+ * all of the files in a directory ending with '.pos'.
+ */
 abstract class CorpusReader extends FileParser {
   def apply(directory:String, tokenizer: Tokenizer = SimpleTokenizer) = {
     val dataset = new File(directory)
