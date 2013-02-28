@@ -35,6 +35,10 @@ trait FileParser{
   def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]]
 }
 
+trait IdentityParser extends FileParser{
+  override def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]] =
+    IndexedSeq(tokenize(text))
+}
 
 /**
  * The PENNParser is used to parse the contents of Penn Treebank 
