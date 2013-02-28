@@ -31,21 +31,21 @@ trait PENNParser extends FileParser {
   val pattern = """([^\s]+/[^\s]+)""".r
   
   override def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]] = text
-            .replaceAll("[*x]{2,}.*[*x]", "") // Remove any comments
-            .replaceAll("(=+)(\\s*=+)*", "$1")
+            .replaceAll("[*x]{2,}.*[*x]", "") //Remove any comments
+            .replaceAll("(=+)(\\s*=+)*", "$1") //Remove sequences of '=' 
             .trim
-            .split("=+")
+            .split("=+") //Split across '=' boundaries
             .filter(_.length > 0)
             .flatMap(x => {
-              (pattern findAllIn x.trim)
+              (pattern findAllIn x.trim) //Extract all word/POS pairs
               .mkString(" ")
-              .split("/\\.")
-              .map(_.replaceAll("""/[^\s]+|[\\]""", "")
-                    .replaceAll("\\s+([n]?'[^\\s]+)|([;:])\\s*[;:]", "$1")
-                    .replaceAll("[\\d]+", "<num>")
+              .split("/\\.") //Split across sentences
+              .map(_.replaceAll("""/[^\s]+|[\\]""", "") //Remove all POS tags and \'s
+                    .replaceAll("\\s+([n]?'[^\\s]+)|([;:])\\s*[;:]", "$1") //Remove sequences of ;'s or :'s and spaces that occur before words that start with ' or "n'"
+                    .replaceAll("[\\d]+", "<num>") //replace numbers with the "<num>" place holder, not perfect but will function
                     .trim)
             }).filter(_.length > 1)
-            .map(tokenize(_))
+            .map(tokenize(_)) //Tokenize every sentence
             .toIndexedSeq
 }
 
