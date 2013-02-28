@@ -21,7 +21,7 @@ object SimpleTokenizer extends Tokenizer {
 
 /* -------------------- Tokenizer - END -------------------- */
 
-/* -------------------- CorpusParser - START -------------------- */
+/* -------------------- FileParser - START -------------------- */
 
 trait FileParser{
   def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]]
@@ -49,7 +49,7 @@ trait PENNParser extends FileParser {
             .toIndexedSeq
 }
 
-/* -------------------- CorpusParser - END -------------------- */
+/* -------------------- FileParser - END -------------------- */
 
 /* -------------------- CorpusReader - START -------------------- */
 
