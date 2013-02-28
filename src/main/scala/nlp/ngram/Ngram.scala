@@ -53,7 +53,7 @@ class Ngram(n:Int,
     } else {
       val prevGram = ngram.replaceAll("\\s+[^\\s]+$", "")
       val prevCount = ngramCounts(n-1)(prevGram)
-      if(prevCount < 1.0 && useBackoff) { //if prevGram does exist, backoff
+      if(prevCount < 1.0 && useBackoff) { //if prevGram does not exist, backoff
         probNgram(ngram.replaceAll("^[^\\s]+\\s+", ""), n-1)
       } else {
         val currCount = ngramCounts(n)(ngram)

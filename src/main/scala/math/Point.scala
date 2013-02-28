@@ -1,6 +1,14 @@
 //Author: Stephen Pryor
 //Feb 24, 2013
 
+/**
+ * Note: This code is essentially a modified version of 
+ * Dr. Jason Baldridge's code in nak.
+ * https://github.com/jasonbaldridge/nak
+ *
+ * I have made only slight modifications.
+ **/
+
 package jarvis.math
 
 case class Point(val vector: IndexedSeq[Double]){
