@@ -105,8 +105,8 @@ class Kmeans(
         val denominator = shortestDistances.sum
         var i = 0
         while(random.nextDouble() < shortestDistances(i)/denominator) {
-          i = if(i >= shortestDistances.length) 0
-              else i + 1
+          i += 1
+          if(i >= shortestDistances.length) i = 0
         }
         stepKmeansPlusPlus(centroids ++ IndexedSeq(points(i)), k-1)
       }
