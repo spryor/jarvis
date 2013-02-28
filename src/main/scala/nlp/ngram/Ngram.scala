@@ -3,6 +3,14 @@
 
 package jarvis.nlp
 
+/**
+ * A class for ngram language models.
+ *
+ * @param n is the type of ngram you wish to create (i.e. n=2 creates a bigram, n=3 creates a trigram, etc.)
+ * @param sentences is and indexed sequence of tokenized sentences to use as training data
+ * @param alpha is the value to use for laplace alpha smoothing
+ * @param useBackoff tells the model whether or not to use simple ("stupid") backoff or not
+ */
 class Ngram(n:Int, 
             sentences: IndexedSeq[IndexedSeq[String]], 
             alpha: Double = 0.5, 
