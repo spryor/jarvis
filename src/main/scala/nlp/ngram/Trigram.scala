@@ -50,7 +50,7 @@ class TrigramModel(discount: Double, alpha: Double) {
    * Returns the perplexity score of the model on a given dataset
    *
    * @param sentences is an indexed sequence of tokenized sentences
-   * @return A double of the perplexity score of the model for the given model
+   * @return A double of the perplexity score of the model for the given data
    */
   def computePerplexity(sentences: IndexedSeq[IndexedSeq[String]]) = {
     var numtokens = 0
