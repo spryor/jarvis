@@ -133,9 +133,7 @@ class TrigramModel(discount: Double, alpha: Double) {
       }
       w2 = w1
       w1 = w0
-      val finalProb = math.log(prob)
-      if(finalProb == 0.0) println(finalProb)
-      finalProb                 
+      math.log(prob)                 
     }).sum
   }  
 }
