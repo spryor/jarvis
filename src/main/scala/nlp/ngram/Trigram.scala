@@ -70,9 +70,7 @@ class TrigramModel(discount: Double, alpha: Double) {
   def train(sentences: IndexedSeq[IndexedSeq[String]]) {
     sentences.foreach(sentence => {
       var (w2, w1) = ("<s>", "<s>")
-      sentence.map(_w0 => {
-        var w0 = _w0
-
+      sentence.map(w0 => {
         TD(w2 +" "+ w1) += 1
         val TNvalue = TN(w2 +" "+ w1 +" "+ w0)
         TN(w2 +" "+ w1 +" "+ w0) += 1
@@ -103,8 +101,7 @@ class TrigramModel(discount: Double, alpha: Double) {
    */
   def prob(sentence: IndexedSeq[String]) = {
     var (w2, w1) = ("<s>", "<s>")
-    sentence.map(_w0 => {
-      var w0 = _w0
+    sentence.map(w0 => {
       var bigram = 0.0
       val unigram = (UN(w0) + alpha) / (UD + alpha*UN.size.toDouble)
       var prob = 0.0
