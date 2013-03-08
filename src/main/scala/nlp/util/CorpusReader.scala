@@ -46,6 +46,16 @@ trait IdentityParser extends FileParser {
 }
 
 /**
+ * The SPLParser assumes there is a sentence per line and tokenizes that sentence.
+ */
+trait SPLParser extends FileParser {
+  override def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]] =
+    text.split("\n")
+      .map(tokenize(_))
+      .toIndexedSeq
+}
+
+/**
  * The PENNParser is used to parse the contents of Penn Treebank 
  * WSJ or BROWN .pos files. 
  */
@@ -78,7 +88,7 @@ trait PENNParser extends FileParser {
  * The CorpusReader class is used to collect, read, and parse
  * all of the files in a directory ending with '.pos' or as specified.
  */
-abstract class CorpusReader(fileEnding: String = ".pos") extends FileParser {
+abstract class CorpusReader(fileEnding: String) extends FileParser {
   def apply(directory:String, tokenizer: Tokenizer = SimpleTokenizer) = {
     val dataset = new File(directory)
     if(!dataset.isDirectory) {
@@ -103,6 +113,6 @@ abstract class CorpusReader(fileEnding: String = ".pos") extends FileParser {
 /* -------------------- CorpusReader - END -------------------- */
 
 //Creates an object to read .pos files from the Penn treebank
-object PENNReader extends CorpusReader with PENNParser
+object PENNReader extends CorpusReader(".pos") with PENNParser
 
 
