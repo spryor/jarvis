@@ -86,7 +86,7 @@ trait PENNParser extends FileParser {
 /* -------------------- CorpusReader - START -------------------- */
 /**
  * The CorpusReader class is used to collect, read, and parse
- * all of the files in a directory ending with '.pos' or as specified.
+ * all of the files in a directory ending with fileEnding.
  */
 abstract class CorpusReader(fileEnding: String) extends FileParser {
   def apply(directory:String, tokenizer: Tokenizer = SimpleTokenizer) = {
