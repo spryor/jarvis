@@ -50,7 +50,8 @@ trait IdentityParser extends FileParser {
  */
 trait SPLParser extends FileParser {
   override def parse(text: String, tokenize: Tokenizer): IndexedSeq[IndexedSeq[String]] =
-    text.split("\n")
+    text.trim
+      .split("\n")
       .map(tokenize(_))
       .toIndexedSeq
 }
