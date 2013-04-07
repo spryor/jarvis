@@ -116,4 +116,7 @@ abstract class CorpusReader(fileEnding: String) extends FileParser {
 //Creates an object to read .pos files from the Penn treebank
 object PENNReader extends CorpusReader(".pos") with PENNParser
 
+//Create and object to read and parse files with a single
+//sentence per file
+object SPLReader extends CorpusReader(".txt") with SPLParser
 
